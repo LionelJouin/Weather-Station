@@ -1,0 +1,30 @@
+{
+  "name": "station",
+  "plural": "station",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sensors": {
+      "type": "hasMany",
+      "model": "sensor",
+      "foreignKey": ""
+    },
+    "data": {
+      "type": "hasMany",
+      "model": "data",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
