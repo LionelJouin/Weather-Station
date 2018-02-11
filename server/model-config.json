@@ -9,20 +9,44 @@
     "mixins": [
       "loopback/common/mixins",
       "loopback/server/mixins",
+      "../node_modules/loopback-ds-timestamp-mixin",
       "../common/mixins",
       "./mixins"
     ]
   },
-  "station": {
-    "dataSource": null,
+  "User": {
+    "dataSource": "db",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Station": {
+    "dataSource": "db",
     "public": true
   },
-  "sensor": {
-    "dataSource": null,
+  "Sensor": {
+    "dataSource": "db",
     "public": true
   },
-  "data": {
-    "dataSource": null,
+  "WeatherData": {
+    "dataSource": "db",
     "public": true
   }
 }

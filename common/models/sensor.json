@@ -1,6 +1,6 @@
 {
-  "name": "sensor",
-  "plural": "sensor",
+  "name": "Sensor",
+  "plural": "Sensor",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -19,5 +19,8 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {},
+  "mixins": {
+    "TimeStamp" : true
+  }
 }

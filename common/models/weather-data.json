@@ -1,27 +1,21 @@
 {
-  "name": "Station",
-  "plural": "Station",
+  "name": "WeatherData",
+  "plural": "WeatherData",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
+    "data": {
+      "type": "object"
     }
   },
   "validations": [],
   "relations": {
-    "sensors": {
-      "type": "hasMany",
-      "model": "Sensor",
-      "foreignKey": ""
-    },
-    "data": {
-      "type": "hasMany",
-      "model": "WeatherData",
+    "station": {
+      "type": "belongsTo",
+      "model": "Station",
       "foreignKey": ""
     }
   },
