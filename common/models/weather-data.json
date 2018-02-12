@@ -6,6 +6,15 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": {
+      "createdAt": "createdOn",
+      "updatedAt": "updatedOn",
+      "required": false,
+      "validateUpsert": true,
+      "silenceWarnings": false
+    }
+  },
   "properties": {
     "data": {
       "type": "object"
@@ -20,8 +29,5 @@
     }
   },
   "acls": [],
-  "methods": {},
-  "mixins": {
-    "TimeStamp" : true
-  }
+  "methods": {}
 }
