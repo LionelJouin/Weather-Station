@@ -14,8 +14,8 @@
 
 SoftwareSerial ESP8266(10, 11);
 
-const String HOST = "192.168.1.91";
-const String HOST_PORT = "3000";
+const String HOST = "weather-station.azurewebsites.net"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
+const String HOST_PORT = "80";
 
 const int DELAY = 20; // in seconds
 
@@ -29,6 +29,9 @@ void setup()
 
 void loop()
 {
+  initESP8266();
+  receive(2000);
+
   int temperature = random(0, 50);
   int humidity = random(0, 100);
   int pressure = random(0, 50);
@@ -78,8 +81,6 @@ void post(const String uri, const String contentType, const String content)
 }
 
 void get(const String uri) {
-  String host = "192.168.1.91";
-
   send("AT+CIPSTART=4,\"TCP\",\"" + HOST + "\"," + HOST_PORT);
   receive(1000);
 
