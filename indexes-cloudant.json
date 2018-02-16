@@ -1,0 +1,35 @@
+[
+    {
+        "index": {
+            "fields": [
+                {
+                    "createdOn": "asc"
+                }
+            ]
+        },
+        "name": "createdOn-index",
+        "type": "json"
+    },
+    {
+        "index": {
+            "fields": [
+                {
+                    "updatedOn": "asc"
+                }
+            ]
+        },
+        "name": "updatedOn-index",
+        "type": "json"
+    },
+    {
+        "index": {
+            "fields": [
+                {
+                    "name": "asc"
+                }
+            ]
+        },
+        "name": "name-index",
+        "type": "json"
+    }
+]

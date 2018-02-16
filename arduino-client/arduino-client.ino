@@ -14,8 +14,11 @@
 
 SoftwareSerial ESP8266(10, 11);
 
-const String HOST = "weather-station.azurewebsites.net"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
-const String HOST_PORT = "80";
+//const String HOST = "weather-station.azurewebsites.net"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
+//const String HOST_PORT = "80";
+
+const String HOST = "192.168.1.91"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
+const String HOST_PORT = "3000";
 
 const int DELAY = 20; // in seconds
 
