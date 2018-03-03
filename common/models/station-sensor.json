@@ -1,0 +1,24 @@
+{
+  "name": "StationSensor",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "station": {
+      "type": "belongsTo",
+      "model": "Station",
+      "foreignKey": ""
+    },
+    "sensor": {
+      "type": "belongsTo",
+      "model": "Sensor",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

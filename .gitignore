@@ -19,3 +19,4 @@ node_modules
 npm-debug.log
 WifiPass.h
 arduino-client/Debug
+base-dev.js

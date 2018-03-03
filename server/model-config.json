@@ -48,5 +48,9 @@
   "WeatherData": {
     "dataSource": "db",
     "public": true
+  },
+  "StationSensor": {
+    "dataSource": "db",
+    "public": true
   }
 }

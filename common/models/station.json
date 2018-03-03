@@ -26,7 +26,8 @@
     "sensors": {
       "type": "hasMany",
       "model": "Sensor",
-      "foreignKey": ""
+      "foreignKey": "",
+      "through": "StationSensor"
     },
     "data": {
       "type": "hasMany",
