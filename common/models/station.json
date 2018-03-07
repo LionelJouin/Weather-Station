@@ -13,6 +13,12 @@
       "required": false,
       "validateUpsert": true,
       "silenceWarnings": false
+    },
+    "CascadeDelete": {
+      "relations": [
+        "data",
+        "sensors"
+      ]
     }
   },
   "properties": {

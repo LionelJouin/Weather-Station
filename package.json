@@ -16,6 +16,7 @@
     "helmet": "^1.3.0",
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
+    "loopback-cascade-delete-mixin": "^2.0.0",
     "loopback-component-explorer": "^5.0.0",
     "loopback-connector-cloudant": "^2.0.4",
     "loopback-connector-mssql": "^3.2.0",
