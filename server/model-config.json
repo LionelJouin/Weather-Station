@@ -15,34 +15,34 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": false
   },
   "Station": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": true
   },
   "Sensor": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": true
   },
   "WeatherData": {
@@ -50,7 +50,7 @@
     "public": true
   },
   "StationSensor": {
-    "dataSource": "db",
+    "dataSource": "AzureDB",
     "public": true
   }
 }
