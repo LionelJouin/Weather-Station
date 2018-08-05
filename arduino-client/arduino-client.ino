@@ -20,7 +20,7 @@ SoftwareSerial ESP8266(10, 11);
 //const String HOST = "192.168.1.21"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
 //const String HOST_PORT = "3000";
 
-const String HOST = "192.168.1.91"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
+const String HOST = "192.168.1.200"; // 192.168.1.91 || http://weather-station.azurewebsites.net/
 const String HOST_PORT = "3000";
 
 const int DELAY = 20; // in seconds
@@ -49,7 +49,6 @@ void loop()
   content += "\"stationId\": 1,";
   content += "\"data\": ";
   content += "{";
-  content += "\"Temperature\": " + String(temperature) + ",";
   content += "\"Temperature\": " + String(temperature) + ",";
   content += "\"Humidity\": " + String(humidity) + ",";
   content += "\"Pressure\": " + String(pressure) + ",";
@@ -114,6 +113,8 @@ void initESP8266()
   ESP8266.begin(9600);
   send("AT+CWMODE=1");
   receive(5000);
+  send("ATE0");
+  receive(1000);
   send("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"");
   receive(10000);
   send("AT+CIFSR");
