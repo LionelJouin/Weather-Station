@@ -7,22 +7,27 @@ Author:	lione
 // the setup function runs once when you press reset or power the board
 //#include <SoftwareSerial.h>
 //#include <AltSoftSerial.h>
-#include <NeoSWSerial.h>
+//#include <NeoSWSerial.h>
+//#define SERIAL_TX_BUFFER_SIZE 32
+//#include <Arduino.h>
 #include <avr/wdt.h>
-//#include <Wire.h>
+#include <Wire.h>
 #include <SPI.h>
 #include <EEPROM.h>
+#include "Adafruit_BMP085.h"
 #include "DHT.h"
-//#include "Adafruit_BMP085.h"
 #include "WifiPass.h"
 
 #define DHTTYPE DHT11   // DHT 11
 #define DHTPIN 2
 DHT dht(DHTPIN, DHTTYPE);
-//Adafruit_BMP085 bmp;
+Adafruit_BMP085 bmp;
 
-//SoftwareSerial ESP8266(10, 11);
-NeoSWSerial ESP8266(10, 11);
+const byte rxPin = 10;
+const byte txPin = 11;
+//SoftwareSerial ESP8266(rxPin, txPin);
+//AltSoftSerial ESP8266;
+//NeoSWSerial ESP8266(rxPin, txPin);
 
 const String HOST = "192.168.1.200";
 const String HOST_PORT = "3000";
@@ -38,30 +43,20 @@ int step = 0;
 
 void setup()
 {
-  //Wire.write(0);
-  //Wire.endTransmission();
-  //digitalWrite(SDA, 0);
-  //digitalWrite(SCL, 0);
-
   Serial.begin(9600);
 
-  Serial.println("====== START ======");
+  print("====== START ======");
 
   step = EEPROM.read(0);
 
-  //I2C_ClearBus();
-  //digitalWrite(A4, LOW);
-  //digitalWrite(A5, LOW);
-
   if (step == 0) {
-    ESP8266.begin(115200);
+    //ESP8266.begin(115200);
   }
   else {
     init_dht();
     init_bmp();
+    read_sensor();
   }
-
-  read_sensor();
 }
 
 void loop()
@@ -75,9 +70,6 @@ void loop()
     int airQuality = get_air_quality();
     int rain = get_rain();
     int brightness = get_brightness();
-
-    //Serial.print("humidity : ");
-    //Serial.println(humidity);
 
     String content = "{";
     content += "\"stationId\": 1,";
@@ -94,6 +86,10 @@ void loop()
 
     post("/api/weatherdata", "application/json", content); // application/x-www-form-urlencoded || application/json
 
+    //String content = "stationId=1&data[Temperature]=15&data[Humidity]=5&data[Pressure]=100&data[AirQuality]=4&data[Rain]=5&data[Brightness]=85";
+
+    //post("/api/weatherdata", "application/x-www-form-urlencoded", content); // application/x-www-form-urlencoded || application/json
+
     delay(DELAY * 1000);
     EEPROM.write(0, 1);
     software_Reboot();
@@ -102,7 +98,7 @@ void loop()
 
 void read_sensor() {
   if (step != 0) {
-    Serial.println("Get humidity, temperature and pressure");
+    print("Get humidity, temperature and pressure");
 
     int temperature = get_temperature();
     EEPROM.write(1, temperature);
@@ -112,6 +108,8 @@ void read_sensor() {
 
     int pressure = get_pressure();
     EEPROM.write(3, pressure);
+
+    //Serial.println(String(temperature) + " : " + String(humidity) + " : " + String(pressure));
 
     EEPROM.write(0, 0);
     software_Reboot();
@@ -123,6 +121,25 @@ void post(const String uri, const String contentType, const String content)
   send("AT+CIFSR", 1000);
   send("AT+CIPSTART=4,\"TCP\",\"" + HOST + "\"," + HOST_PORT, 3000);
 
+  //const int length = 6;
+  //String req[length];
+  ////req[0] = "POST " + uri + " HTTP/1.1\r\n";
+  ////req[1] += "Host: " + HOST + ":" + HOST_PORT + "\r\n";
+  ////req[2] += "Content-Type: " + contentType + "\r\n";
+  ////req[3] += "Content-Length: " + String(content.length()) + "\r\n";
+  ////req[4] += "\r\n";
+  ////req[5] += content;
+  //String request = "";
+  //for (int i = 0; i < length; i++) {
+  //  request += req[i];
+  //}
+  //send("AT+CIPSEND=4," + String(request.length()), 5000);
+  //for (int i = 0; i < length; i++) {
+  //  Serial.print(req[i]);
+  //  //Serial.flush();
+  //}
+  //receive(4000);
+
   String request = "POST " + uri + " HTTP/1.1\r\n";
   request += "Host: " + HOST + ":" + HOST_PORT + "\r\n";
   request += "Content-Type: " + contentType + "\r\n";
@@ -132,7 +149,16 @@ void post(const String uri, const String contentType, const String content)
 
   send("AT+CIPSEND=4," + String(request.length()), 5000);
   send(request, 4000);
+  //Serial.write(string2char(request));
+  //receive(4000);
   send("AT+CIPCLOSE=5", 1000);
+}
+
+char* string2char(String command) {
+  if (command.length() != 0) {
+    char *p = const_cast<char*>(command.c_str());
+    return p;
+  }
 }
 
 void get(const String uri) {
@@ -148,16 +174,16 @@ void init_ESP8266()
 {
   // https://www.itead.cc/wiki/ESP8266_Serial_WIFI_Module#AT_Commands
   // https://www.fais-le-toi-meme.fr/fr/electronique/materiel/esp8266-arduino-wifi-2-euros
-  Serial.println("======= START INIT =======");
+  print("======= START INIT =======");
   send("AT+RST", 2000);
   send("AT+CIOBAUD=9600", 2000);
-  ESP8266.begin(9600);
+  //ESP8266.begin(9600);
   send("AT+CWMODE=1", 2000);
   send("ATE0", 2000);
   send("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"", 5000);
   send("AT+CIFSR", 3000);
   send("AT+CIPMUX=1", 2000);
-  Serial.println("======= END INIT =======");
+  print("======= END INIT =======");
 }
 
 void send(String command, const int timeout)
@@ -168,9 +194,11 @@ void send(String command, const int timeout)
     if (i == 0) {
       delay(1000);
     }
-    //Serial.println("SEND " + String(i) + " l " + command);
-    ESP8266.println(command);
-    response = receive(timeout);
+    //print("SEND " + String(i) + " l " + command);
+    //ESP8266.listen();
+    //ESP8266.println(command);
+    Serial.println(command);
+    response = receive(timeout); 
     delay(2000);
     i++;
     if (i >= RETRY) {
@@ -185,14 +213,20 @@ String receive(const int timeout)
   long int time = millis();
   while ((time + timeout) > millis())
   {
-    while (ESP8266.available())
+    //while (ESP8266.available())
+    while (Serial.available())
     {
-      char c = ESP8266.read();
+      //char c = ESP8266.read();
+      char c = Serial.read();
       response += c;
     }
   }
-  Serial.print(response);
+  print(response);
   return response;
+}
+
+void print(const String message) {
+  //Serial.println(message);
 }
 
 bool response_failed(String response) {
@@ -218,12 +252,11 @@ void init_dht() {
 }
 
 void init_bmp() {
-  //bmp.begin();
+  bmp.begin();
 }
 
 int get_temperature() {
-  //return (float)bmp.readTemperature();
-  return 0;
+  return (float)bmp.readTemperature();
 }
 
 int get_humidity() {
@@ -231,8 +264,7 @@ int get_humidity() {
 }
 
 int get_pressure() {
-  //return (int)bmp.readPressure();
-  return 0;
+  return (int)bmp.readPressure();
 }
 
 int get_air_quality() {
