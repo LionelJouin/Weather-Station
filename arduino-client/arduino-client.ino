@@ -8,7 +8,6 @@ Author:	lione
 //#include <SoftwareSerial.h>
 //#include <AltSoftSerial.h>
 //#include <NeoSWSerial.h>
-//#define SERIAL_TX_BUFFER_SIZE 32
 //#include <Arduino.h>
 #include <avr/wdt.h>
 #include <Wire.h>
@@ -123,12 +122,12 @@ void post(const String uri, const String contentType, const String content)
 
   //const int length = 6;
   //String req[length];
-  ////req[0] = "POST " + uri + " HTTP/1.1\r\n";
-  ////req[1] += "Host: " + HOST + ":" + HOST_PORT + "\r\n";
-  ////req[2] += "Content-Type: " + contentType + "\r\n";
-  ////req[3] += "Content-Length: " + String(content.length()) + "\r\n";
-  ////req[4] += "\r\n";
-  ////req[5] += content;
+  //req[0] = "POST " + uri + " HTTP/1.1\r\n";
+  //req[1] += "Host: " + HOST + ":" + HOST_PORT + "\r\n";
+  //req[2] += "Content-Type: " + contentType + "\r\n";
+  //req[3] += "Content-Length: " + String(content.length()) + "\r\n";
+  //req[4] += "\r\n";
+  //req[5] += content;
   //String request = "";
   //for (int i = 0; i < length; i++) {
   //  request += req[i];
@@ -148,9 +147,14 @@ void post(const String uri, const String contentType, const String content)
   request += content;
 
   send("AT+CIPSEND=4," + String(request.length()), 5000);
-  send(request, 4000);
+  //send(request, 4000);
+  for (int i = 0; i < request.length(); i++)
+  {
+    Serial.print(request[i]);
+  }
+  //Serial.println(Serial.availableForWrite());
   //Serial.write(string2char(request));
-  //receive(4000);
+  receive(4000);
   send("AT+CIPCLOSE=5", 1000);
 }
 
@@ -198,7 +202,7 @@ void send(String command, const int timeout)
     //ESP8266.listen();
     //ESP8266.println(command);
     Serial.println(command);
-    response = receive(timeout); 
+    response = receive(timeout);
     delay(2000);
     i++;
     if (i >= RETRY) {
