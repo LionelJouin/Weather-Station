@@ -45,19 +45,19 @@
     "dataSource": "AzureDB",
     "public": false
   },
-  "Station": {
+  "station": {
     "dataSource": "AzureDB",
     "public": true
   },
-  "Sensor": {
+  "sensor": {
     "dataSource": "AzureDB",
     "public": true
   },
-  "WeatherData": {
+  "weatherData": {
     "dataSource": "db",
     "public": true
   },
-  "StationSensor": {
+  "stationSensor": {
     "dataSource": "AzureDB",
     "public": true
   },

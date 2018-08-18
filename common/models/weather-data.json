@@ -1,6 +1,6 @@
 {
-  "name": "WeatherData",
-  "plural": "WeatherData",
+  "name": "weatherData",
+  "plural": "weatherData",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -24,7 +24,7 @@
   "relations": {
     "station": {
       "type": "belongsTo",
-      "model": "Station",
+      "model": "station",
       "foreignKey": ""
     }
   },

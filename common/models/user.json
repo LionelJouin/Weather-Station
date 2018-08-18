@@ -12,7 +12,7 @@
   "relations": {
     "projects": {
       "type": "hasMany",
-      "model": "Station",
+      "model": "station",
       "foreignKey": ""
     }
   },

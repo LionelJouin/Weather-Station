@@ -1,6 +1,6 @@
 {
-  "name": "Sensor",
-  "plural": "Sensor",
+  "name": "sensor",
+  "plural": "sensor",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

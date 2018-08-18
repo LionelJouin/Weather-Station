@@ -1,6 +1,6 @@
 {
-  "name": "Station",
-  "plural": "Station",
+  "name": "station",
+  "plural": "station",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -31,13 +31,13 @@
   "relations": {
     "sensors": {
       "type": "hasMany",
-      "model": "Sensor",
+      "model": "sensor",
       "foreignKey": "",
-      "through": "StationSensor"
+      "through": "stationSensor"
     },
     "data": {
       "type": "hasMany",
-      "model": "WeatherData",
+      "model": "weatherData",
       "foreignKey": ""
     }
   },

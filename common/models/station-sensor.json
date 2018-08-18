@@ -1,5 +1,5 @@
 {
-  "name": "StationSensor",
+  "name": "stationSensor",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -10,12 +10,12 @@
   "relations": {
     "station": {
       "type": "belongsTo",
-      "model": "Station",
+      "model": "station",
       "foreignKey": ""
     },
     "sensor": {
       "type": "belongsTo",
-      "model": "Sensor",
+      "model": "sensor",
       "foreignKey": ""
     }
   },
