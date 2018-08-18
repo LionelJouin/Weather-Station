@@ -1,21 +1,18 @@
 {
-  "name": "StationSensor",
-  "base": "PersistedModel",
+  "name": "user",
+  "base": "User",
   "idInjection": true,
+  "ttl": -1,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "allowEternalTokens": true
   },
   "properties": {},
   "validations": [],
   "relations": {
-    "station": {
-      "type": "belongsTo",
+    "projects": {
+      "type": "hasMany",
       "model": "Station",
-      "foreignKey": ""
-    },
-    "sensor": {
-      "type": "belongsTo",
-      "model": "Sensor",
       "foreignKey": ""
     }
   },
@@ -33,10 +30,11 @@
       "permission": "ALLOW"
     },
     {
-      "accessType": "WRITE",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW"
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "create"
     }
   ],
   "methods": {}

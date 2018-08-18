@@ -21,7 +21,14 @@
   },
   "AccessToken": {
     "dataSource": "AzureDB",
-    "public": false
+    "public": false,
+    "relations": {
+      "user": {
+        "type": "belongsTo",
+        "model": "user",
+        "foreignKey": "userId"
+      }
+    }
   },
   "ACL": {
     "dataSource": "AzureDB",
@@ -51,6 +58,10 @@
     "public": true
   },
   "StationSensor": {
+    "dataSource": "AzureDB",
+    "public": true
+  },
+  "user": {
     "dataSource": "AzureDB",
     "public": true
   }
