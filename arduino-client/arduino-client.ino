@@ -20,6 +20,8 @@ Adafruit_BMP085 bmp;
 //const String HOST_PORT = "80";
 const String HOST = "192.168.1.200";
 const String HOST_PORT = "3000";
+//const String HOST = "192.168.1.200";
+//const String HOST_PORT = "1337";
 
 const int DELAY = 20; // in seconds
 const int RETRY = 4;
@@ -76,18 +78,18 @@ void post(const String uri, const String contentType, const String content)
 {
   send("AT+CIFSR", 1000);
   send("AT+CIPSTART=4,\"TCP\",\"" + HOST + "\"," + HOST_PORT, 3000);
-
-  String request = "POST " + uri + " HTTP/1.1\r\n";
-  request += "Host: " + HOST + ":" + HOST_PORT + "\r\n";
-  request += "Content-Type: " + contentType + "\r\n";
-  request += "Content-Length: " + String(content.length()) + "\r\n";
-  request += "\r\n";
-  request += content;
-
-  send("AT+CIPSEND=4," + String(request.length()), 5000);
-  for (int i = 0; i < request.length(); i++)
+  
+  int length = 113 + HOST.length() + HOST_PORT.length() + content.length() + access_token.length();
+  send("AT+CIPSEND=4," + String(length), 5000);
+  Serial.print("POST " + uri + " HTTP/1.1\r\n");
+  Serial.print("Host: " + HOST + ":" + HOST_PORT + "\r\n");
+  Serial.print("Content-Type: " + contentType + "\r\n");
+  Serial.print("Content-Length: " + String(content.length()) + "\r\n");
+  Serial.print("Authorization: " + access_token + "\r\n");
+  Serial.print("\r\n");
+  for (int i = 0; i < content.length(); i++)
   {
-    Serial.print(request[i]);
+    Serial.print(content[i]);
   }
   receive(4000);
   send("AT+CIPCLOSE=5", 1000);
