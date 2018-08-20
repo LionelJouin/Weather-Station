@@ -3,7 +3,7 @@
 module.exports = function (app) {
 
     var ds = app.dataSources.AzureDB;
-    var lbTables = ["User", "AccessToken", "ACL", "RoleMapping", "Role", "station", "sensor", "stationSensor", "weatherData", "user"];
+    var lbTables = ["User", "AccessToken", "ACL", "RoleMapping", "Role", "station", "sensor", "stationSensor", "user"];
 
     // migrate();
     update();
