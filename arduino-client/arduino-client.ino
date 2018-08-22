@@ -16,14 +16,15 @@ Author:	lione
 DHT dht(DHTPIN, DHTTYPE);
 Adafruit_BMP085 bmp;
 
-//const String HOST = "weather-station.azurewebsites.net";
-//const String HOST_PORT = "80";
-const String HOST = "192.168.1.200";
-const String HOST_PORT = "3000";
+const String HOST = "weather-station.azurewebsites.net";
+const String HOST_PORT = "80";
+/*const String HOST = "192.168.1.200";
+const String HOST_PORT = "3000"*/;
 //const String HOST = "192.168.1.200";
 //const String HOST_PORT = "1337";
 
-const int DELAY = 20; // in seconds
+// existing : 71000 (71 secondes)
+const int DELAY = 829; // in seconds (900 - 71)
 const int RETRY = 4;
 
 const int PIN_BRIGHTNESS = 0;
@@ -70,7 +71,9 @@ void loop()
 
   post("/api/weatherdata", "application/json", content);
 
-  delay(DELAY * 1000);
+  for (int i = 0; i < DELAY; i++) {
+    delay(1000);
+  }
   software_Reboot();
 }
 
@@ -78,7 +81,7 @@ void post(const String uri, const String contentType, const String content)
 {
   send("AT+CIFSR", 1000);
   send("AT+CIPSTART=4,\"TCP\",\"" + HOST + "\"," + HOST_PORT, 3000);
-  
+
   int length = 113 + HOST.length() + HOST_PORT.length() + content.length() + access_token.length();
   send("AT+CIPSEND=4," + String(length), 5000);
   Serial.print("POST " + uri + " HTTP/1.1\r\n");
